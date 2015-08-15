@@ -1,0 +1,29 @@
+---
+- hosts: default
+  sudo: yes
+  vars:
+    spotify_url: 'http://repository.spotify.com'
+    spotify_sources: '/etc/apt/sources.list.d/spotify.list'
+    deb_local: /tmp/libgcrypt11.deb
+  tasks:
+  - name: spotify | check sources
+    stat: path={{ spotify_sources }}
+    register: spotify_sources_file
+    ignore_errors: True
+
+  - name: spotify | add signing key
+    shell: apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys D2C19886
+    when: not spotify_sources_file.stat.exists
+
+  - name: spotify | add repo
+    shell: echo deb {{ spotify_url }} stable non-free | sudo tee {{ spotify_sources }}
+    when: not spotify_sources_file.stat.exists
+
+  - name: spotify | install
+    apt: name=spotify-client state=present update_cache=yes
+
+  - name: spotify | fix issue with Ubuntu 15.04 | download deb
+    get_url: url=https://launchpad.net/ubuntu/+archive/primary/+files/libgcrypt11_1.5.3-2ubuntu4.2_amd64.deb dest={{ deb_local }} mode=0440
+
+  - name: spotify | fix issue with Ubuntu 15.04 | install deb
+    command: dpkg -i {{ deb_local }}
