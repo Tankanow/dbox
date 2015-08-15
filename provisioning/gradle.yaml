@@ -1,0 +1,18 @@
+---
+- hosts: default
+  sudo: yes
+  vars:
+    gradle_parent: '/opt'
+    gradle_path: "{{ gradle_parent }}/gradle-2.4"
+    gradle_link: "{{ gradle_parent }}/gradle"
+    gradle_zip: '/tmp/gradle-2.4-all.zip'
+    gradle_url: 'https://services.gradle.org/distributions/gradle-2.4-all.zip'
+  tasks:
+  - name: gradle | download
+    get_url: url={{ gradle_url }} dest={{ gradle_zip }}
+
+  - name: gradle | unpack gradle
+    unarchive: src={{ gradle_zip }} dest={{ gradle_parent }} copy=no creates={{ gradle_path }}
+
+  - name: gradle | link gradle
+    file: state=link src={{ gradle_path }} dest={{ gradle_link }}

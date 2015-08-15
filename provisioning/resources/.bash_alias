@@ -1,0 +1,63 @@
+#!/bin/bash
+# .bash_alias
+## ALIASES
+#
+# LS
+alias ll='ls -Gal'
+alias ls='ls -G'
+alias lrt='ls -lrtG'
+# rm
+alias rrf='rm -rf'
+# SSH
+alias ssh.ec2='ssh -i ~/Documents/ec2/keys/tank-ec2-1.pem ubuntu@54.200.111.157'
+# The next two require sudo
+# Directories
+alias to.website='pushd ~/Documents/code/tankanow/com.atankanow/'
+alias to.desktop='pushd ~/Desktop'
+alias to.docs='pushd ~/Documents'
+alias to.note='pushd ~/Documents/note'
+alias to.code='pushd ~/Documents/code'
+alias to.class='pushd ~/Documents/class'
+alias to.dl='pushd ~/Downloads'
+alias to.github='pushd ~/Documents/code/public/github'
+alias to.git.public.repo='pushd /usr/share/git/'
+alias to.sublime.user='pushd /Users/adam_tankanow/Library/Application\ Support/Sublime\ Text\ 2/Packages/User'
+alias to.play='pushd ~/Documents/code/playpen/'
+# DIAGNOSTICS
+alias diag.ports='netstat -tunap | less'
+# PATH management
+alias path.svn='export PATH=/usr/local/bin/:$PATH'
+# LOCAL command line apps
+alias app.eclipse='/usr/local/eclipse/eclipse 1>/tmp/eclipse.log 2>&1 &'
+alias app.eclipse.rtc='open ~/Documents/code/ide/name/rtc/eclipse/Eclipse.app/'
+alias app.eclipse.home='/usr/local/eclipse-java-kepler-SR1-macosx-cocoa-x86_64/eclipse 1>/tmp/eclipse.log 2>&1 &'
+alias app.gitcolor='git config --global color.ui "auto"'
+alias app.subl.note='subl --project ~/Documents/note/note.sublime-project'
+alias app.syn='/usr/bin/synergyc --daemon -l /tmp/synergy.log bn-atankanow-0'
+alias app.crashplan.unload='sudo launchctl unload /Library/LaunchDaemons/com.crashplan.engine.plist'
+alias app.crashplan.load='sudo launchctl load /Library/LaunchDaemons/com.crashplan.engine.plist'
+# Overrides
+alias emacs='emacs &'
+alias vi='vim'
+alias grails='/usr/local/springsource/grails-2.1.1/bin/grails'
+alias tree='tree -C'
+alias emacs='/usr/local/bin/emacs'
+alias ad.build='asciidoc -v -a asciimath -a toc'
+alias svn='/usr/bin/svn'
+# Extensions
+alias sublnw='subl -n -w'
+alias sublproj='subl -n --project'
+# tmux
+alias tmux.ls='tmux list-sessions'
+# jbake
+alias jbake='/usr/local/jbake/jbake'
+# quickies
+alias u='cd ..'
+alias uu='cd ../..'
+alias uuu='cd ../../..'
+alias poms='find . -name "pom.xml" | grep -v target'
+alias dv='dirs -v | column -t'
+alias deptree='mvn dependency:tree -Dincludes="com.nuance.escription.*" | egrep -e "INFO\]\ [c+|\]"'
+# system stuff
+alias sys.showdotfiles='defaults write com.apple.Finder AppleShowAllFiles YES'
+alias sys.hidedotfiles='defaults write com.apple.Finder AppleShowAllFiles NO'

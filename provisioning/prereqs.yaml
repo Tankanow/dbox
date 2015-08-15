@@ -1,0 +1,10 @@
+---
+- hosts: default
+  sudo: yes
+  tasks:
+
+  - name: ansible prereq | install libselinux-python
+    apt: name=libselinux-python state=latest
+
+  - name: ansible prereq | install unzip
+    apt: name=unzip state=latest

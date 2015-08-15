@@ -1,0 +1,28 @@
+---
+- hosts: default
+  sudo: yes
+  vars:
+    eclipse_parent: '/opt'
+    eclipse_path: "{{ eclipse_parent }}/eclipse"
+    eclipse_zip: '/tmp/eclipse.tar.gz'
+    eclipse_url: 'http://som-tcapp01.nuance.com:9083/RelEng/DEV_IDE_setups/eclipse.tar.gz'
+    java_link: '/opt/eclipse/jre'
+    java_path: "/usr/java/jdk1.8.0_31"
+  tasks:
+  - name: eclipse | download
+    get_url: url={{ eclipse_url }} dest={{ eclipse_zip }}
+
+  - name: eclipse | unpack eclipse
+    unarchive: src={{ eclipse_zip }} dest={{ eclipse_parent }} copy=no creates={{ eclipse_path }}
+
+  - name: eclipse | link java
+    file: state=link src={{ java_path }} dest={{ java_link }}
+
+  - name: eclipse | add launcher icon
+    copy: src=resources/eclipse.desktop dest=/usr/share/applications/eclipse.desktop
+
+  - name: eclipse | install dos2unix
+    apt: name=dos2unix state=present
+
+  - name: eclipse | fix line endings
+    command: dos2unix /usr/share/applications/eclipse.desktop

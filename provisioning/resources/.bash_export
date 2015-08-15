@@ -1,0 +1,20 @@
+#!/bin/bash
+
+#### EXPORTS
+# a collection of a bunch of exports
+
+# Terminal stuff
+export PS1="\! \W [\t]$ "
+export EDITOR=vim
+
+## Development
+export GIT_HOME=/usr/local/git
+export M2_HOME=/usr/local/maven
+export JAVA_HOME=/usr/java/jdk1.8.0_31/
+
+# ... and Finally the Path
+## put /usr/local/bin before /usr/bin
+export PATH=/usr/local/bin:$PATH
+## add maven home
+export PATH=$PATH:$M2_HOME/bin
+

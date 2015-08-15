@@ -1,0 +1,49 @@
+#!/bin/bash
+
+# Functions
+function matrix1() {
+echo -e "\e[1;40m" ; clear ; while :; do echo $LINES $COLUMNS $(( $RANDOM % $COLUMNS)) $(( $RANDOM % 72 )) ;sleep 0.05; done|gawk '{ letters="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()"; c=$4; letter=substr(letters,c,1);a[$3]=0;for (x in a) {o=a[x];a[x]=a[x]+1; printf "\033[%s;%sH\033[2;32m%s",o,x,letter; printf "\033[%s;%sH\033[1;37m%s\033[0;0H",a[x],x,letter;if (a[x] >= $1) { a[x]=0; } }}'
+}
+
+function classInJars?(){
+  class=${1?}
+  dir=${2-'.'}
+  grep -rao --include='*.jar' "[$./0-9A-Z_a-z]*${class}*[0-9A-Z_a-z]*" ${dir}
+}
+
+function updatePomVersions(){
+  local old=${1?} ; shift
+  local new=${1?}
+
+  poms | xargs sed -i.BAK -e "s/${old}/${new}/g"
+  find . -name "*.BAK" -exec rm -rf {} \;
+}
+
+function tmux.at(){
+  local -r session=${1?} ; shift
+  tmux attach-session -t "$session"
+}
+
+function mvn.branch(){
+  local -r branchName="${1?}" ; shift
+  mvn release:branch -DbranchName="$branchName" -DupdateBranchVersions=true -DupdateWorkingCopyVersions=false
+}
+
+function export.java_home(){
+  local -r version="${1?"Please pass java version: [7|8]"}" ; shift
+  if [[ $version == 7 ]] ; then
+    export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_55.jdk/Contents/Home
+  elif [[ $version == 8 ]] ; then
+    export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home
+  else
+    echo "unknown java version [$version]"
+  fi
+}
+
+function svn.release(){
+  local -r version=${1?} ; shift
+  local -r message=${1?} ; shift
+  local -r url=$(svn info | awk '/URL/{print $NF}')
+
+  svn cp "$url" "${url%trunk}tags/$version" -m "$message"
+}

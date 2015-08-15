@@ -1,0 +1,7 @@
+---
+- hosts: default
+  sudo: yes
+
+  tasks:
+  - name: java | openjdk | install
+    apt: name=openjdk-8-jdk state=latest

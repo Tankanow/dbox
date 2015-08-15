@@ -1,0 +1,104 @@
+#!/bin/bash
+###########################
+#
+# Nice prompt with svn info
+#
+############################
+
+
+        RED="\[\033[0;31m\]"
+      GREEN="\[\033[0;32m\]"
+     YELLOW="\[\033[0;33m\]"
+       BLUE="\[\033[0;34m\]"
+ LIGHT_GRAY="\[\033[0;37m\]"
+  LIGHT_RED="\[\033[1;31m\]"
+LIGHT_GREEN="\[\033[1;32m\]"
+  DARK_BLUE="\[\033[1;34m\]"
+      WHITE="\[\033[1;37m\]"
+ COLOR_NONE="\[\e[0m\]"
+
+function dirs.short {
+  #dirs -p | awk -F'/' '{print $NF}' | tr '\n' ' ' | sed s/\ $//
+  #dirs | tr ' ' '\n' | awk -F'-' '"...-"{print $NF}' | tr '\n' ' ' | sed s/\ $//
+  dirs | tr ' ' '\n' | awk -F'/' '{print $NF}' | \
+    awk -F'-' '{ 
+      if (NF > 1) { 
+        for (i=0; i<NF; i++) { 
+          if(i < (NF-1)) { printf "."} 
+          else {printf "-" }}} 
+      printf $NF"|"}' | sed -e 's/|$//'
+}
+
+function svnstatus {
+  if svn status 2>&1 | grep -q "not a working" ; then
+    echo ""
+  else
+    if svn status | egrep -q "^[MDA?]" ; then
+      echo " $YELLOW(modified)"
+      return 1
+    else
+      echo " $GREEN(up-to-date)"
+      return 0
+    fi
+  fi
+}
+
+function parse_git_branch {
+  git rev-parse --git-dir &> /dev/null
+  git_status="$(git status 2> /dev/null)"
+  branch_pattern="^# On branch ([^${IFS}]*)"
+  remote_pattern="# Your branch is (.*) of"
+  diverge_pattern="# Your branch and (.*) have diverged"
+  
+  if [[ ! ${git_status}} =~ "working directory clean" ]]; then
+    state="${RED}⚡"
+  fi
+  # add an else if or two here if you want to get more specific
+  if [[ ${git_status} =~ ${remote_pattern} ]]; then
+    if [[ ${BASH_REMATCH[1]} == "ahead" ]]; then
+      remote="${YELLOW}↑"
+    else
+      remote="${YELLOW}↓"
+    fi
+  fi
+  if [[ ${git_status} =~ ${diverge_pattern} ]]; then
+    remote="${YELLOW}↕"
+  fi
+  if [[ ${git_status} =~ ${branch_pattern} ]]; then
+    branch=${BASH_REMATCH[1]}
+    echo " (${branch})${remote}${state}"
+  fi
+}
+
+#PS1="$DARK_RED\! $DARK_BLUE\W $BLUE[\t]>$NO_COLOR "
+#PS2='continue-> '
+#PS4='$0.$LINENO+ '
+function prompt.git() {
+    previous_return_value=$?;
+    
+    #prompt="${TITLEBAR}${BLUE}[${RED}\W${GREEN}$(parse_git_branch)${BLUE}]${COLOR_NONE}"
+    prompt="${TITLEBAR}${BLUE}[${RED}$(dirs.short)${GREEN}$(parse_git_branch)${BLUE}]${COLOR_NONE}"
+    
+    if test $previous_return_value -eq 0
+    then
+        PS1="${prompt}> "
+    else
+        PS1="${prompt}${RED}>${COLOR_NONE} "
+    fi
+}
+
+function prompt.svn() {
+    previous_return_value=$?;
+    
+    prompt="${TITLEBAR}${LIGHT_RED}\! ${DARK_BLUE}($(dirs.short))$(svnstatus) ${BLUE}[\t]${COLOR_NONE}"
+    #prompt="${TITLEBAR}${BLUE}[${RED}\W${GREEN}$(parse_git_branch)${BLUE}]${COLOR_NONE}"
+    
+    if test $previous_return_value -eq 0
+    then
+        PS1="${prompt}> "
+    else
+        PS1="${prompt}${RED}>${COLOR_NONE} "
+    fi
+}
+
+PROMPT_COMMAND=prompt.git

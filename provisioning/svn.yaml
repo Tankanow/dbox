@@ -1,0 +1,7 @@
+---
+- hosts: default
+  sudo: yes
+
+  tasks:
+  - name: svn | install
+    apt: name=subversion state=latest

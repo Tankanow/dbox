@@ -1,0 +1,7 @@
+---
+- hosts: default
+  sudo: yes
+
+  tasks:
+  - name: utils | dos2unix
+    apt: name=dos2unix state=latest

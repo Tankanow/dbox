@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF8"?>
+<toolchains>
+  <!-- JDK toolchains -->
+  <toolchain>
+    <type>jdk</type>
+    <provides>
+      <version>1.8</version>
+      <vendor>oracle</vendor>
+    </provides>
+    <configuration>
+      <jdkHome>/usr/java/jdk1.8.0_31</jdkHome>
+    </configuration>
+  </toolchain>
+  <toolchain>
+    <type>jdk</type>
+    <provides>
+      <version>1.7</version>
+      <vendor>oracle</vendor>
+    </provides>
+    <configuration>
+      <jdkHome>/usr/java/jdk1.7.0_79</jdkHome>
+    </configuration>
+  </toolchain>
+</toolchains>

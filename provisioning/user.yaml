@@ -1,0 +1,12 @@
+---
+- hosts: default
+  sudo: yes
+  vars:
+    username: '{{ user }}'
+
+  tasks:
+  - name: user | create users group
+    group: name=users
+
+  - name: user | create user
+    user: name={{ username }} password={{ password }} group=users groups=docker 

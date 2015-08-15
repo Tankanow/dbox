@@ -1,0 +1,27 @@
+---
+- hosts: default
+  sudo: yes
+  vars:
+    vagrant_url: 'https://dl.bintray.com/mitchellh/vagrant/vagrant_1.7.2_x86_64.deb'
+    vagrant_deb: '/tmp/vagrant.deb'
+    vagrant_path: '/usr/bin/vagrant'
+    virtualbox_url: 'http://download.virtualbox.org/virtualbox/4.3.28/virtualbox-4.3_4.3.28-100309~Ubuntu~raring_amd64.deb'
+    virtualbox_deb: '/tmp/virtualbox.deb'
+  tasks:
+  - name: vagrant | download virtualbox
+    get_url: url={{ virtualbox_url }} dest={{ virtualbox_deb }}
+
+  - name: vagrant | install vitualbox
+    apt: deb={{ virtualbox_deb }} state=present
+
+  - name: vagrant | check current installation
+    stat: path={{ vagrant_path }}
+    register: vagrant_dir
+    ignore_errors: True
+
+  - name: vagrant | download vagrant
+    get_url: url={{ vagrant_url }} dest={{ vagrant_deb }}
+
+  - name: vagrant | install
+    apt: deb={{ vagrant_deb }} state=present
+    when: not vagrant_dir.stat.exists

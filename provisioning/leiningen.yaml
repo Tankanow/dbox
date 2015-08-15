@@ -1,0 +1,20 @@
+---
+- hosts: default
+  sudo: yes
+  vars:
+    lein_remote: 'https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein'
+    lein_local: '/usr/local/bin/lein'
+    
+  tasks:
+  - name: clojure | lein | check current installation
+    stat: path={{ lein_local }}
+    register: lein_exec
+    ignore_errors: True
+    
+  - name: clojure | lein | install
+    get_url: url={{ lein_remote }} dest={{ lein_local }}
+    when: not lein_exec.stat.exists
+
+  - name: clojure | lein | chmod
+    file: path={{ lein_local }} mode=0555
+    when: not lein_exec.stat.exists

@@ -1,0 +1,22 @@
+---
+- hosts: default
+  sudo: yes
+  vars:
+    docker_url: https://get.docker.com/
+    docker_sh: /tmp/docker.sh
+    docker_bin: /usr/bin/docker
+
+  tasks:
+  - name: docker | get install script
+    get_url: url={{ docker_url }} dest={{ docker_sh }}
+
+  - name: docker | set install script permissions
+    file: path={{ docker_sh }} mode='0755'
+
+  - name: docker | install docker
+    command: '{{ docker_sh }}'
+    args:
+      creates: "{{ docker_bin }}"
+
+  - name: docker | start daemon
+    service: name=docker state=started

@@ -1,0 +1,6 @@
+---
+- hosts: default
+  sudo: yes
+  tasks:
+  - name: git | install
+    apt: name=git state=latest

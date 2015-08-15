@@ -1,0 +1,16 @@
+---
+- hosts: default
+  vars:
+    prelude_install_script: 'https://git.io/epre'
+    
+  tasks:
+  - name: emacs | prelude | check current installation
+    stat: path=/home/tank/.emacs.d/prelude-modules.el
+    register: prelude_modules
+    ignore_errors: True
+    
+  - name: emacs | prelude | install
+    shell: curl -L "{{ prelude_install_script }}" | sh
+    when: not prelude_modules.stat.exists
+    args:
+      chdir: /home/tank

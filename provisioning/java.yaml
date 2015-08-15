@@ -1,0 +1,24 @@
+---
+- hosts: default
+  sudo: yes
+  vars:
+    java8_zip: '/tmp/jdk8.tar.gz'
+    java_root: '/usr/java'
+    java8_path: "{{ java_root }}/jdk1.8.0_31"
+  tasks:
+  - name: java8 | create base directory
+    file: path={{ java_root }} state=directory  
+
+  - name: java8 | check current installation
+    stat: path={{ java8_path }}
+    register: java8_dir
+    ignore_errors: True
+
+  - name: java8 | download
+    command: '/usr/bin/wget --no-cookies --no-check-certificate --header "Cookie: oraclelicense=accept-securebackup-cookie" -O "{{ java8_zip }}" "http://download.oracle.com/otn-pub/java/jdk/8u31-b13/jdk-8u31-linux-x64.tar.gz"'
+    args:
+      creates: "{{ java8_zip }}"
+
+  - name: java8 | unpack
+    unarchive: src={{ java8_zip }} dest={{ java_root }} copy=no creates={{ java8_path }}
+    when: not java8_dir.stat.exists

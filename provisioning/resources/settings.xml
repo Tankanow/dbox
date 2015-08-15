@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings
+    xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd"
+    xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    
+    <profiles>
+        <profile>
+            <id>profile-developer</id>
+            <!-- This needs to be updated by developers to reflect the location of their own properties files-->
+            <properties>
+                <!-- ASR artifactory releases -->
+                <artifactory.name>asr-artifactory</artifactory.name>
+                <artifactory.url>http://asr-artifactory:8081/artifactory</artifactory.url>
+                <!-- ASR artifactory releases -->
+                <artifactory.release.name>asr-artifactory-releases</artifactory.release.name>
+                <artifactory.release.url>http://asr-artifactory:8081/artifactory/libs-release-local</artifactory.release.url>
+                <!-- ASR artifactory snapshots -->
+                <artifactory.snapshot.name>asr-artifactory-snapshots</artifactory.snapshot.name>
+                <artifactory.snapshot.url>http://asr-artifactory:8081/artifactory/libs-snapshot-local</artifactory.snapshot.url>
+                <escription.log.properties>c:/clu/conf/escription_log4j.properties</escription.log.properties>
+                <clu.properties.dir>c:/clu/conf</clu.properties.dir>
+            </properties>
+
+            <repositories>
+                <!-- EditScript repositories for GETTING artifacts -->
+                <repository>
+                    <id>editscript-artifactory-releases</id>
+                    <name>editscript-artifactory-releases</name>
+                    <url>http://ndmesc-art901.asp.escriptioncolo.com/artifactory/editscript-releases-local</url>
+                    <releases>
+                        <enabled>true</enabled>
+                        <updatePolicy>daily</updatePolicy>
+                        <checksumPolicy>warn</checksumPolicy>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </repository>
+                <repository>
+                    <id>editscript-artifactory-snapshots</id>
+                    <name>editscript-artifactory-snapshots</name>
+                    <url>http://ndmesc-art901.asp.escriptioncolo.com/artifactory/editscript-snapshots-local</url>
+                    <releases>
+                        <enabled>false</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                        <updatePolicy>daily</updatePolicy>
+                        <checksumPolicy>warn</checksumPolicy>
+                    </snapshots>
+                </repository>
+                <repository>
+                    <id>libs-artifactory-releases</id>
+                    <name>libs-artifactory-releases</name>
+                    <url>http://ndmesc-art901.asp.escriptioncolo.com/artifactory/libs-release-local</url>
+                    <releases>
+                        <enabled>true</enabled>
+                        <updatePolicy>daily</updatePolicy>
+                        <checksumPolicy>warn</checksumPolicy>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </repository>
+
+                <!-- ASR repositories for GETTING artifacts -->
+                <repository>
+                    <id>asr-artifactory-releases</id>
+                    <name>asr-artifactory-releases</name>
+                    <url>http://asr-artifactory:8081/artifactory/libs-release</url>
+                    <releases>
+                        <enabled>true</enabled>
+                        <updatePolicy>daily</updatePolicy>
+                        <checksumPolicy>warn</checksumPolicy>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </repository>
+                <repository>
+                    <id>asr-artifactory-snapshots</id>
+                    <name>asr-artifactory-snapshots</name>
+                    <url>http://asr-artifactory:8081/artifactory/libs-snapshot</url>
+                    <releases>
+                        <enabled>false</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                        <updatePolicy>daily</updatePolicy>
+                        <checksumPolicy>warn</checksumPolicy>
+                    </snapshots>
+                </repository>
+                <repository>
+                    <id>asr-libs-artifactory-releases</id>
+                    <name>asr-libs-artifactory-releases</name>
+                    <url>http://ndmesc-art901.asp.escriptioncolo.com/artifactory/asr-libs-release-local</url>
+                    <releases>
+                        <enabled>true</enabled>
+                        <updatePolicy>daily</updatePolicy>
+                        <checksumPolicy>warn</checksumPolicy>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </repository>
+
+                <!-- External repository for GETTING artifacts -->
+                <repository>
+                    <id>artifactory-ext</id>
+                    <name>artifactory-ext</name>
+                    <url>http://ndmesc-art901.asp.escriptioncolo.com/artifactory/ext-release-local/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                        <updatePolicy>daily</updatePolicy>
+                        <checksumPolicy>warn</checksumPolicy>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </repository>
+                <repository>
+                    <id>smartbear-soapui-repository</id>
+                    <url>http://www.soapui.org/repository/maven2/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                        <updatePolicy>daily</updatePolicy>
+                        <checksumPolicy>warn</checksumPolicy>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </repository>
+            </repositories>
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>artifactory-plugins-release</id>
+                    <name>artifactory-plugins-release</name>
+                    <url>http://ndmesc-art901.asp.escriptioncolo.com/artifactory/plugins-release/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                        <updatePolicy>daily</updatePolicy>
+                        <checksumPolicy>warn</checksumPolicy>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </pluginRepository>
+                <pluginRepository>
+                    <id>artifactory-plugins-snapshot</id>
+                    <name>artifactory-plugins-snapshot</name>
+                    <url>http://ndmesc-art901.asp.escriptioncolo.com/artifactory/plugins-snapshot/</url>
+                    <releases>
+                        <enabled>false</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                        <updatePolicy>daily</updatePolicy>
+                        <checksumPolicy>warn</checksumPolicy>
+                    </snapshots>
+                </pluginRepository>
+                <pluginRepository>
+                    <id>artifactory-remote</id>
+                    <name>artifactory-remote</name>
+                    <url>http://ndmesc-art901.asp.escriptioncolo.com/artifactory/remote-repos/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                        <updatePolicy>daily</updatePolicy>
+                        <checksumPolicy>warn</checksumPolicy>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </pluginRepository>
+            </pluginRepositories>
+        </profile>
+    </profiles>
+
+    <activeProfiles>
+        <activeProfile>profile-developer</activeProfile>
+    </activeProfiles>
+
+</settings>

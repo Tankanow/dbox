@@ -1,0 +1,9 @@
+- include: java.yaml
+- include: maven.yaml
+- include: gvm.yaml
+- include: git.yaml
+- include: svn.yaml
+- include: docker.yaml
+- include: env.yaml
+- include: emacs24_4.yaml
+- include: rpm.yaml

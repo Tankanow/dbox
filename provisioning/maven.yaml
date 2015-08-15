@@ -1,0 +1,18 @@
+---
+- hosts: default
+  sudo: yes
+  vars:
+    mvn_parent: '/opt'
+    mvn_path: "{{ mvn_parent }}/apache-maven-3.2.5"
+    mvn_link: "{{ mvn_parent }}/maven"
+    mvn_targz: '/tmp/apache-maven-3.2.5.tar.gz'
+    mvn_url: 'http://mirrors.sonic.net/apache/maven/maven-3/3.2.5/binaries/apache-maven-3.2.5-bin.tar.gz'
+  tasks:
+  - name: maven | download
+    get_url: url={{ mvn_url }} dest={{ mvn_targz }}
+
+  - name: maven | Unpack maven
+    unarchive: src={{ mvn_targz }} dest={{ mvn_parent }} copy=no creates={{ mvn_path }}
+
+  - name: maven | Link maven
+    file: state=link src={{ mvn_path }} dest={{ mvn_link }}

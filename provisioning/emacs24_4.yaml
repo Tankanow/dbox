@@ -1,0 +1,48 @@
+---
+- hosts: default
+  sudo: yes
+  vars:
+    emacs_tar: 'http://ftp.gnu.org/gnu/emacs/emacs-24.4.tar.gz'
+    emacs_local_tar: "/tmp/emacs-24.4.tar.gz"
+    emacs_root: '/opt/emacs'
+    emacs_path: "{{ emacs_root }}/emacs-24.4"
+    prelude_install_script: 'https://git.io/epre'
+    
+  tasks:
+  - name: emacs | create base directory
+    file: path={{ emacs_root }} state=directory
+    
+  - name: emacs | check current installation
+    stat: path={{ emacs_path }}
+    register: emacs_dir
+    ignore_errors: True
+    
+  - name: emacs | prereq | build-essentials
+    apt: name=build-essential state=latest
+    
+  - name: emacs | prereq | build deps
+    apt: name=emacs24 state=build-dep
+
+  - name: emacs | download
+    command: 'wget -O "{{ emacs_local_tar }}" "{{ emacs_tar }}"'
+    args:
+      creates: "{{ emacs_tar }}"
+    
+  - name: emacs | unpack
+    unarchive: src={{ emacs_local_tar }} dest={{ emacs_root }} copy=no creates={{ emacs_path }}
+    when: not emacs_dir.stat.exists
+
+  - name: emacs | configure - make - install
+    shell: ./configure && make && make install
+    args:
+      chdir: "{{ emacs_path }}"
+    when: not emacs_dir.stat.exists
+
+  - name: emacs | prelude | check current installation
+    stat: path=/home/tank/.emacs.d/prelude-modules.el
+    register: prelude_modules
+    ignore_errors: True
+    
+  - name: emacs | prelude | install
+    shell: curl -L "{{ prelude_install_script }}" | sh
+    when: not prelude_modules.stat.exists
