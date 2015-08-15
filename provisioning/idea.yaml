@@ -1,0 +1,21 @@
+---
+- hosts: default
+  sudo: yes
+  vars:
+    idea_tar_remote: 'http://download.jetbrains.com/idea/ideaIC-14.1.4.tar.gz'
+    idea_tar_local: /tmp/idea.tar.gz
+    idea_root: /opt/idea
+  tasks:
+  - name: idea | create base directory
+    file: path={{ idea_root }} state=directory
+
+  - name: idea | check install
+    stat: path={{ idea_root }}
+    register: spotify_sources_file
+    ignore_errors: True
+
+  - name: idea | download
+    get_url: url={{ idea_tar_remote }} dest={{ idea_tar_local }} mode=0444
+
+  - name: idea | unpack
+    unarchive: src={{ idea_tar_local }} dest={{ idea_root }} copy=no
