@@ -7,7 +7,7 @@
     java8_path: "{{ java_root }}/jdk1.8.0_31"
   tasks:
   - name: java8 | create base directory
-    file: path={{ java_root }} state=directory  
+    file: path={{ java_root }} state=directory
 
   - name: java8 | check current installation
     stat: path={{ java8_path }}
