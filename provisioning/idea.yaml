@@ -4,18 +4,26 @@
   vars:
     idea_tar_remote: 'http://download.jetbrains.com/idea/ideaIC-14.1.4.tar.gz'
     idea_tar_local: /tmp/idea.tar.gz
-    idea_root: /opt/idea
+    idea_root: /opt
   tasks:
-  - name: idea | create base directory
-    file: path={{ idea_root }} state=directory
 
-  - name: idea | check install
-    stat: path={{ idea_root }}
-    register: spotify_sources_file
+  - name: idea | check installation
+    stat: path={{ idea_root }}/idea
+    register: idea_dir
     ignore_errors: True
 
   - name: idea | download
     get_url: url={{ idea_tar_remote }} dest={{ idea_tar_local }} mode=0444
+    when: not idea_dir.stat.exists
 
   - name: idea | unpack
     unarchive: src={{ idea_tar_local }} dest={{ idea_root }} copy=no
+    when: not idea_dir.stat.exists
+
+  - name: idea | rename untarred dir
+    shell: mv {{ idea_root }}/idea* {{ idea_root }}/idea
+    when: not idea_dir.stat.exists
+
+  - name: idea | desktop
+    copy: src=resources/idea.desktop dest=/usr/share/applications/idea.desktop
+    when: not idea_dir.stat.exists
