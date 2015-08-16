@@ -1,8 +1,5 @@
 # .bashrc
 
-# Set command line interaction to VI
-set -o vi
-
 # Import ALIASES
 source ~/.bash_alias
 
@@ -19,4 +16,4 @@ source ~/.bash_prompt
 export PATH="/usr/local/heroku/bin:$PATH"
 
 #THIS MUST BE AT THE END OF THE FILE FOR GVM TO WORK!!!
-[[ -s "/Users/adam_tankanow/.gvm/bin/gvm-init.sh" && -z $(which gvm-init.sh | grep '/gvm-init.sh') ]] && source "/Users/adam_tankanow/.gvm/bin/gvm-init.sh"
+[[ -s "/home/tank/.gvm/bin/gvm-init.sh" && -z $(which gvm-init.sh | grep '/gvm-init.sh') ]] && source "/home/tank/.gvm/bin/gvm-init.sh"
