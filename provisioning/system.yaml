@@ -1,9 +1,20 @@
-- include: java.yaml
-- include: maven.yaml
-- include: gvm.yaml
-- include: git.yaml
-- include: svn.yaml
-- include: docker.yaml
+# Ansible prereqs
+- include: prereqs.yaml
+# bashrcs and some utils
 - include: env.yaml
+- include: utils.yaml
+# emacs and prelude
 - include: emacs24_4.yaml
+- include: prelude.yaml
+# spotify for music
+- include: spotify.yaml
+# now for the dev stuff
+- include: docker.yaml
+- include: git.yaml
+- include: gvm.yaml
+- include: idea.yaml
+- include: java-openjdk.yaml
+- include: leiningen.yaml
+- include: maven.yaml
 - include: rpm.yaml
+- include: vagrant.yaml
