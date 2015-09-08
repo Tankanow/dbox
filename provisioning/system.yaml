@@ -3,6 +3,7 @@
 # bashrcs and some utils
 - include: env.yaml
 - include: utils.yaml
+- include: tmux.yaml
 # emacs and prelude
 - include: emacs24_4.yaml
 - include: prelude.yaml
