@@ -1,0 +1,7 @@
+---
+- hosts: default
+  sudo: yes
+
+  tasks:
+  - name: tmux | install
+    apt: name=tmux state=latest
