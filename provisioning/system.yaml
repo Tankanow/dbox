@@ -8,6 +8,7 @@
 - include: prelude.yaml
 # spotify for music
 - include: spotify.yaml
+- include: vlc.yaml
 # now for the dev stuff
 - include: docker.yaml
 - include: git.yaml
