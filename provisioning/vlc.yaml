@@ -1,0 +1,7 @@
+---
+- hosts: default
+  sudo: yes
+
+  tasks:
+  - name: vlc | install
+    apt: name=vlc state=latest
