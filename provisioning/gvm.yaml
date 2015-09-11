@@ -2,7 +2,7 @@
 - hosts: default
   sudo: yes
   vars:
-    prelude_install_script: 'get.gvmtool.net'
+    gvm_install_script: 'get.gvmtool.net'
 
   tasks:
   - name: gvm | check current installation
@@ -12,9 +12,9 @@
 
   - name: gvm | install | curl
     apt: name=curl state=latest
-    
+
   - name: gvm | install
-    shell: curl -s "{{ prelude_install_script }}" | bash
+    shell: curl -s "{{ gvm_install_script }}" | bash
     when: not gvm_dir.stat.exists
     args:
       chdir: /home/tank
