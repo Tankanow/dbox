@@ -10,11 +10,20 @@
     register: gvm_dir
     ignore_errors: True
 
-  - name: gvm | install | curl
-    apt: name=curl state=latest
-
   - name: gvm | install
     shell: curl -s "{{ gvm_install_script }}" | bash
     when: not gvm_dir.stat.exists
     args:
       chdir: /home/tank
+
+  - name: gvm | update
+    shell: su -l -c "gvm selfupdate" tank
+
+  - name: gvm | install | groovy
+    shell: su -l -c "gvm i groovy" tank
+
+  - name: gvm | install | gradle
+    shell: su -l -c "gvm i gradle" tank
+
+  - name: gvm | install | springboot
+    shell: su -l -c "gvm i springboot" tank
