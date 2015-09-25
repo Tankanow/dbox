@@ -5,3 +5,9 @@
   tasks:
   - name: utils | dos2unix
     apt: name=dos2unix state=latest
+
+  - name: utils | curl
+    apt: name=curl state=latest
+
+  - name: utils | tree
+    apt: name=tree state=latest
