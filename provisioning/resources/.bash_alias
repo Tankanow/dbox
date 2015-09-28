@@ -3,9 +3,9 @@
 ## ALIASES
 #
 # LS
-alias ll='ls -Gal'
-alias ls='ls -G'
-alias lrt='ls -lrtG'
+alias ll='ls -al --color=auto'
+alias ls='ls --color=auto'
+alias lrt='ls -lrt --color=auto'
 # rm
 alias rrf='rm -rf'
 # SSH
