@@ -11,3 +11,6 @@
 
   - name: utils | tree
     apt: name=tree state=latest
+
+  - name: utils | httpie
+    apt: name=httpie state=latest
